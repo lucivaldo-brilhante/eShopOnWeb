@@ -25,11 +25,23 @@ namespace Microsoft.eShopWeb.Web.Pages.Admin
 
         public async Task OnGet(CatalogIndexViewModel catalogModel, int? pageId)
         {
-            var cacheKey = CacheHelpers.GenerateCatalogItemCacheKey(pageId.GetValueOrDefault(), Constants.ITEMS_PER_PAGE, catalogModel.BrandFilterApplied, catalogModel.TypesFilterApplied);
+            var cacheKey = CacheHelpers.GenerateCatalogItemCacheKey(
+                pageId.GetValueOrDefault(),
+                Constants.ITEMS_PER_PAGE,
+                catalogModel.SearchText,
+                catalogModel.BrandFilterApplied,
+                catalogModel.TypesFilterApplied);
 
             _cache.Remove(cacheKey);
 
-            CatalogModel = await _catalogViewModelService.GetCatalogItems(pageId.GetValueOrDefault(), Constants.ITEMS_PER_PAGE, catalogModel.BrandFilterApplied, catalogModel.TypesFilterApplied);
+            CatalogModel = await _catalogViewModelService.GetCatalogItems(
+                pageId.GetValueOrDefault(),
+                Constants.ITEMS_PER_PAGE,
+                catalogModel.SearchText,
+                catalogModel.BrandFilterApplied,
+                catalogModel.TypesFilterApplied,
+                convertPrice: false,
+                HttpContext.RequestAborted);
         }
     }
 }

@@ -17,7 +17,7 @@
             <label class="esh-catalog-label" data-title="type">
                 <select asp-for="@Model.CatalogModel.TypesFilterApplied" asp-items="@Model.CatalogModel.Types" class="esh-catalog-filter"></select>
             </label>
-            <input class="esh-catalog-send" type="image" src="images/arrow-right.svg" />
+            <input type="text" asp-for="@Model.CatalogModel.SearchText" />
         </form>
     </div>
 </section>

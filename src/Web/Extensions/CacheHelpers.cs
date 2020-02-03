@@ -2,14 +2,29 @@
 
 namespace Microsoft.eShopWeb.Web.Extensions
 {
+    public class InvalidPageIndexException: Exception {
+
+    }
+
     public static class CacheHelpers
     {
         public static readonly TimeSpan DefaultCacheDuration = TimeSpan.FromSeconds(30);
-        private static readonly string _itemsKeyTemplate = "items-{0}-{1}-{2}-{3}";
-
-        public static string GenerateCatalogItemCacheKey(int pageIndex, int itemsPage, int? brandId, int? typeId)
+        private static readonly string _itemsKeyTemplate = "items-{0}-{1}-{2}-{3}-{4}";
+        public static string GenerateCatalogItemCacheKey(
+            int pageIndex, int itemsPage,
+            string searchText, int? brandId, int? typeId)
         {
-            return string.Format(_itemsKeyTemplate, pageIndex, itemsPage, brandId, typeId);
+            if (pageIndex < 0) {
+                throw new InvalidPageIndexException();
+            }
+            return string.Format(
+                _itemsKeyTemplate, pageIndex, itemsPage, brandId, typeId,
+                searchText ?? string.Empty // TODO: Handle invalid special chars in cache keys?
+            );
+        }
+
+        public static string GenerateCatalogItemIdKey(int id) {
+            return $"catalog_item_{id}";
         }
 
         public static string GenerateBrandsCacheKey()

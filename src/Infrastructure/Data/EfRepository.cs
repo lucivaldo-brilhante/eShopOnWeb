@@ -57,6 +57,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Data
 
         public async Task DeleteAsync(T entity)
         {
+            // especifica o que se pretende _dbContext.CatalogItems.Where(x => x.Name == "sdsd");
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
