@@ -259,4 +259,4 @@ pub/
 .eshopdocker_*
 \.vscode/
 
-appsettings.Azure.json
+appsettings.*.json
