@@ -50,7 +50,12 @@ namespace Microsoft.eShopWeb.Web {
         public IConfiguration Configuration { get; }
 
         public void ConfigureDevelopmentServices(IServiceCollection services) {
-            services.AddSingleton<ICurrencyService, CurrencyServiceStatic>();
+            services.AddSingleton<ICurrencyService>(provider => {
+                var conversionRulesConfigSection = Configuration.GetSection("ConversionRules");
+                var conversionRules = conversionRulesConfigSection.Get<List<ConversionRule>>();
+           
+                return new CurrencyServiceStatic(conversionRules);
+            });
             
             // use in-memory database
             ConfigureInMemoryDatabases(services);
