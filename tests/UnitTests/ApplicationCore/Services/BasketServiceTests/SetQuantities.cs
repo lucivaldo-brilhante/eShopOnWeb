@@ -64,31 +64,53 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTes
             _mockBasketRepo.Verify(x => x.UpdateAsync(basket), Times.Once());
         }
     // inclusão de novo teste
-    [Fact]
-        public async Task SetQuantityToZero_Remove_Item_From_Basket() {
-            var basketId = 10;// o cesto tem 10 produtos
+        [Theory]
+        [InlineData(4, 1)]
+        [InlineData(4, 2)]
+        [InlineData(4, 3)]
+        [InlineData(4, 4)]
+        // [InlineData(10)]
+        public async Task SetQuantityToZero_Removes_Item_From_Basket(
+            int numInitiallItemsBasket, int numItemsToRemove
+        ) {
+            if (numInitiallItemsBasket < numItemsToRemove) {
+                throw new Exception();
+            }
+            var random = new Random();
+            var basketId = 10;
             var basket = new Basket();
-            var itemId = 1;
-            var initialQty = 5;
-            //Add multiple items
-            basket.AddItem(itemId, 10, 1);
-            var targetItem = basket.Items.First();
-            targetItem.Id = itemId;
-            //End Add multiple items
+            var itemPrice = 10;
+            // CREATE INITIAL BASKET
+            foreach (var itemId in Enumerable.Range(1, numInitiallItemsBasket)) {
+                var initialQty = random.Next(1, 10);
+                basket.AddItem(itemId, itemPrice, initialQty);
+            }
+            foreach (var item in  basket.Items) {
+                item.Id = item.CatalogItemId;
+            }
+            // END INTIAL BASKET
             var initialItemsCount = basket.Items.Count;
+
             // targetItem.Id = itemId;
             _mockBasketRepo.Setup(
                 x => x.GetByIdAsync(basketId)).ReturnsAsync(basket);
 
             var basketService = new BasketService(_mockBasketRepo.Object, null);
-            var targetItemQty = initialQty;
-            var quantities = new System.Collections.Generic.Dictionary<string, int>() {
-                { itemId.ToString(), targetItemQty }
-            };
+            // BEGIN DECIDE ITEMS TO REMOVE
+            // var itemIdToRemove = random.Next(1, numInitiallItemsBasket);
+            // var itemToRemove =  basket.Items.Where(item => item.Id == itemIdToRemove).First();
+            var quantities = new System.Collections.Generic.Dictionary<string, int>();
+            foreach (var itemToRemove in basket.Items.Take(numItemsToRemove)){
+                quantities.Add(itemToRemove.Id.ToString(), 0);
+            }
+            // var numItemsToRemove = quantities.Count;
+            // END DECIDE ITEMS TO REMOVE
+
             await basketService.SetQuantities(
                     basketId,
                     quantities);
-            Assert.True(basket.Items.Count == initialItemsCount-1);
+            var expectedCount = initialItemsCount - numItemsToRemove;
+            Assert.True(basket.Items.Count == expectedCount);
             _mockBasketRepo.Verify(x => x.UpdateAsync(basket), Times.Once());
         }
 
