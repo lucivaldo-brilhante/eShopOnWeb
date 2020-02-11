@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace Infrastructure.Services.CurrencyService
 
         public CurrencyServiceStatic(ICollection<ConversionRule> rules = null) {
             _rules = rules ?? DEFAULT_RULES;
+        }
+
+        public CurrencyServiceStatic(List<ConversionRule> conversionRules)
+        {
         }
 
         /// <inheritdoc />
