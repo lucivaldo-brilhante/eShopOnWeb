@@ -136,6 +136,8 @@ namespace Microsoft.eShopWeb.Web {
 
             services.AddMediatR(typeof(BasketViewModelService).Assembly);
 
+            services.AddMediatR(typeof(WishlistViewModelService).Assembly);
+            
             if (_webHostEnvironment.IsDevelopment()) {
                 services.AddSingleton<ICurrencyService, CurrencyServiceStatic>();
             } else {

@@ -5,6 +5,9 @@ using Microsoft.eShopWeb.ApplicationCore.Specifications;
 using System.Linq;
 using Ardalis.GuardClauses;
 using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
+using Microsoft.eShopWeb.ApplicationCore.Entities.WishlistAggregate;
+using Microsoft.eShopWeb.ApplicationCore.Entities;
+using ApplicationCore.Exceptions;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services
 {
