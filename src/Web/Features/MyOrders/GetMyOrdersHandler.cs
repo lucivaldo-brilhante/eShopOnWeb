@@ -2,6 +2,7 @@
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using Microsoft.eShopWeb.ApplicationCore.Specifications;
 using Microsoft.eShopWeb.Web.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -36,8 +37,23 @@ namespace Microsoft.eShopWeb.Web.Features.MyOrders
                 }).ToList(),
                 OrderNumber = o.Id,
                 ShippingAddress = o.ShipToAddress,
+                Status = GetDetailedStatus(o.Status),
                 Total = o.Total()
             });
+        }
+        
+        private string GetDetailedStatus(string status)
+        {
+            if (status == "Pending") return status;
+            if (status == "Out for Delivery")
+            {
+                return $"{status} - ETA {DateTime.Now.AddHours(1).ToShortTimeString()}";
+            }
+            if (status == "Delivered")
+            {
+                return $"{status} at {DateTime.Now.AddHours(-1).ToShortTimeString()}";
+            }
+            return "Unknown";
         }
     }
 }
