@@ -14,6 +14,7 @@
                 <section class="esh-orders-detail-title col-xs-3">Date</section>
                 <section class="esh-orders-detail-title col-xs-2">Total</section>
                 <section class="esh-orders-detail-title col-xs-3">Status</section>
+                <section class="esh-orders-detail-title col-xs-1">Print PDF</section>
             </article>
 
             <article class="esh-orders-detail-items row">
@@ -21,6 +22,8 @@
                 <section class="esh-orders-detail-item col-xs-3">@Model.OrderDate</section>
                 <section class="esh-orders-detail-item col-xs-2">$@Model.Total.ToString("N2")</section>
                 <section class="esh-orders-detail-item col-xs-3">@Model.Status</section>
+                <section class="esh-orders-detail-item col-xs-1"><img src="~/images/toPdf.png" asp-append-version="true"  ><a asp-controller="{orderId}/pdf"
+   asp-action="Index">link toPdf</a></section>
             </article>
         </section>
 
