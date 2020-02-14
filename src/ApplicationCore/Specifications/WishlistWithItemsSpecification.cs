@@ -15,4 +15,4 @@ namespace Microsoft.eShopWeb.ApplicationCore.Specifications
             AddInclude(b => b.Items);
         }
     }
-    }
+} 

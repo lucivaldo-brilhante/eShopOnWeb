@@ -78,16 +78,5 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             wishlist.BuyerId = userName;
             await _wishlistRepository.UpdateAsync(wishlist);
         }
-
-        public async Task TransferWishlistItemToAsync(int wishlistItemId, int basketId, int quantity)
-        {
-            Guard.Against.NullOrEmpty(wishlistItemId, nameof(wishlistItemId));
-            Guard.Against.NullOrEmpty(basketId, nameof(basketId));
-            var wishlistSpec = new WishlistWithItemsSpecification(wishlistItemId);
-            var wishlist = (await _wishlistRepository.ListAsync(wishlistSpec)).FirstOrDefault();
-            if (wishlist == null) return;
-            wishlist.BuyerId = userName;
-            await _wishlistRepository.UpdateAsync(wishlist);
-        }
-    }
-}
+   }
+} 

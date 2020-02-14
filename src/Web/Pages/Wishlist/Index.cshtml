@@ -40,7 +40,7 @@
                             <section class="esh-basket-item esh-basket-item--middle esh-basket-item--mark col-xs-2">$ @Math.Round(item.Quantity * item.UnitPrice, 2).ToString("N2")</section>
                         </div>
                         <div class="row">
-                            
+
                         </div>
                     </article>
                    @*<div class="esh-catalog-item col-md-4">
@@ -77,9 +77,8 @@
                                 asp-page-handler="Update">
                             [ Update ]
                         </button>
-                        <input type="submit" asp-page="Checkout"
-                               class="btn esh-basket-checkout"
-                               value="[ Checkout ]" name="action" />
+                        <input type="submit"
+                         asp-page-handler="TransferBasket" class="btn esh-basket-checkout" value="[ Add to basket ]" name="action" />
                     </section>
                 </div>
             </div>
@@ -88,9 +87,9 @@
     else
     {
         <h3 class="esh-catalog-items row">
-            Basket is empty.
+            Wishlist is empty.
         </h3>
-        
+
         <section class="esh-basket-item">
             <a asp-page="/Index" class="btn esh-basket-checkout text-white">[ Continue choosing items..]</a>
         </section>

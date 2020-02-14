@@ -13,4 +13,4 @@ namespace Microsoft.eShopWeb.Infrastructure.Data.Config
                 .HasColumnType("decimal(18,2)");
         }
     }
-}
+} 

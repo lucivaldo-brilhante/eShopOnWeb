@@ -16,4 +16,4 @@ namespace Microsoft.eShopWeb.Infrastructure.Data.Config
                 .HasMaxLength(40);
         }
     }
-}
+} 
