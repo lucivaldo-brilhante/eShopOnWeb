@@ -134,6 +134,8 @@ namespace Microsoft.eShopWeb.Web {
 
             CreateIdentityIfNotCreated(services);
 
+
+            services.AddScoped<IViewRenderService, ViewRenderService>();
             services.AddMediatR(typeof(BasketViewModelService).Assembly);
 
             services.AddMediatR(typeof(WishlistViewModelService).Assembly);

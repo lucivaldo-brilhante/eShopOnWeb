@@ -1,11 +1,4 @@
 ﻿@model OrderViewModel
-@{
-    ViewData["Title"] = "My Order History";
-}
-@{
-    ViewData["Title"] = "Order Detail";
-}
-
 <div class="esh-orders-detail">
     <div class="container">
         <section class="esh-orders-detail-section">
@@ -23,7 +16,6 @@
                 <section class="esh-orders-detail-item col-xs-2">$@Model.Total.ToString("N2")</section>
                 <section class="esh-orders-detail-item col-xs-3">@Model.Status</section>
                 <section class="esh-orders-detail-item col-xs-1"><img src="~/images/toPdf.png" asp-append-version="true"  >
-                <a asp-controller="Order"  asp-action="DetailPdf" asp-route-orderId="@Model.OrderNumber">link toPdf</a></section>
             </article>
         </section>
 

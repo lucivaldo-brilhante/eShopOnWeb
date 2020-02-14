@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.Web.Features.MyOrders;
 using Microsoft.eShopWeb.Web.Features.OrderDetails;
 using System.Threading.Tasks;
+using Microsoft.eShopWeb.Web.Services;
 using IronPdf;
-
 
 namespace Microsoft.eShopWeb.Web.Controllers
 {
@@ -17,10 +17,12 @@ namespace Microsoft.eShopWeb.Web.Controllers
     public class OrderController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IViewRenderService _viewRenderService;
 
-        public OrderController(IMediator mediator)
+        public OrderController(IMediator mediator, IViewRenderService viewRenderService)
         {
             _mediator = mediator;
+            _viewRenderService= viewRenderService;
         }
 
         [HttpGet()]
@@ -54,16 +56,17 @@ namespace Microsoft.eShopWeb.Web.Controllers
          [HttpGet("{orderId}/pdf")]
         public async Task<IActionResult> DetailPdf(int orderId)
         {
-            var urlBuilder = new System.UriBuilder(new Uri(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host.Value))
-            {
-                Path = Url.Action("Detail", "Pdf", new { orderId = orderId }),
-                Query = null,
-            };
-            var url = urlBuilder.Uri;
-            IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
-            var pdfDoc = await Renderer.RenderUrlAsPdfAsync(url);
+            var viewModel = await _mediator.Send(new GetOrderDetails(User.Identity.Name, orderId));
 
-            return File(pdfDoc.BinaryData, "application/pdf", $"order{orderId}");
+            if (viewModel == null)
+            {
+                return BadRequest("No such order found for this user.");
+            }
+            var html = await _viewRenderService.RenderToStringAsync("Order/Detail_Doc", viewModel);
+            IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
+            var pdfDoc = await Renderer.RenderHtmlAsPdfAsync(html);
+
+            return File(pdfDoc.BinaryData, "application/pdf", $"order{orderId}.pdf");
 
         // var viewResult = await Detail(orderId) as ViewResult;
             // var renderedView = await viewRenderService.RenderToStringAsync(viewResult.ViewName, viewResult.Model);
