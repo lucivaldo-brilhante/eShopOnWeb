@@ -40,7 +40,8 @@ namespace Microsoft.eShopWeb.Web.Pages.Wishlist
             IBasketService basketService,
             IBasketViewModelService basketViewModelService,
             IWishlistViewModelService wishlistViewModelService,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IAppLogger<WishlistService> logger)
         {
             _wishlistService = wishlistService;
             _signInManager = signInManager;
@@ -49,6 +50,7 @@ namespace Microsoft.eShopWeb.Web.Pages.Wishlist
             _basketViewModelService = basketViewModelService;
             _wishListItemsRepo = wishListItemsRepo;
             _catalogItemsRepo = catalogItemsRepo;
+            _logger = logger;
         }
 
         public WishlistViewModel WishlistModel { get; set; } = new WishlistViewModel();
