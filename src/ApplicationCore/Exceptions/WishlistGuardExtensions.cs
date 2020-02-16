@@ -1,6 +1,5 @@
-using Microsoft.eShopWeb.ApplicationCore.Exceptions;
-using Microsoft.eShopWeb.ApplicationCore.Entities.WishlistAggregate;
 using Ardalis.GuardClauses;
+using Microsoft.eShopWeb.ApplicationCore.Entities.WishlistAggregate;
 
 namespace ApplicationCore.Exceptions
 {

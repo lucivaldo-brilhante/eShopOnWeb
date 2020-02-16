@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Interfaces
 {
-    public enum Currency {
+    public enum Currency
+    {
         USD,
         EUR,
         GBP

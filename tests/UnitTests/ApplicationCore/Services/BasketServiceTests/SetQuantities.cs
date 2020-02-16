@@ -1,12 +1,12 @@
-﻿using Microsoft.eShopWeb.ApplicationCore.Exceptions;
+﻿using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
+using Microsoft.eShopWeb.ApplicationCore.Exceptions;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using Microsoft.eShopWeb.ApplicationCore.Services;
-using Microsoft.eShopWeb.ApplicationCore.Entities.BasketAggregate;
 using Moq;
 using System;
 using System.Linq;
-using Xunit;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTests
 {
@@ -41,7 +41,8 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTes
         }
 
         [Fact]
-        public async Task Update_ExistingItemQty_Succeeds() {
+        public async Task Update_ExistingItemQty_Succeeds()
+        {
             var basketId = 10;
             var basket = new Basket();
             var itemId = 1;
@@ -63,7 +64,7 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTes
             Assert.Equal(targetItemQty, targetItem.Quantity);
             _mockBasketRepo.Verify(x => x.UpdateAsync(basket), Times.Once());
         }
-    // inclusão de novo teste
+        // inclusão de novo teste
         [Theory]
         [InlineData(4, 1)]
         [InlineData(4, 2)]
@@ -72,8 +73,10 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTes
         // [InlineData(10)]
         public async Task SetQuantityToZero_Removes_Item_From_Basket(
             int numInitiallItemsBasket, int numItemsToRemove
-        ) {
-            if (numInitiallItemsBasket < numItemsToRemove) {
+        )
+        {
+            if (numInitiallItemsBasket < numItemsToRemove)
+            {
                 throw new Exception();
             }
             var random = new Random();
@@ -81,11 +84,13 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTes
             var basket = new Basket();
             var itemPrice = 10;
             // CREATE INITIAL BASKET
-            foreach (var itemId in Enumerable.Range(1, numInitiallItemsBasket)) {
+            foreach (var itemId in Enumerable.Range(1, numInitiallItemsBasket))
+            {
                 var initialQty = random.Next(1, 10);
                 basket.AddItem(itemId, itemPrice, initialQty);
             }
-            foreach (var item in  basket.Items) {
+            foreach (var item in basket.Items)
+            {
                 item.Id = item.CatalogItemId;
             }
             // END INTIAL BASKET
@@ -100,7 +105,8 @@ namespace Microsoft.eShopWeb.UnitTests.ApplicationCore.Services.BasketServiceTes
             // var itemIdToRemove = random.Next(1, numInitiallItemsBasket);
             // var itemToRemove =  basket.Items.Where(item => item.Id == itemIdToRemove).First();
             var quantities = new System.Collections.Generic.Dictionary<string, int>();
-            foreach (var itemToRemove in basket.Items.Take(numItemsToRemove)){
+            foreach (var itemToRemove in basket.Items.Take(numItemsToRemove))
+            {
                 quantities.Add(itemToRemove.Id.ToString(), 0);
             }
             // var numItemsToRemove = quantities.Count;

@@ -1,14 +1,11 @@
-﻿using System; 
-using System.Net;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.Web.Features.MyOrders;
 using Microsoft.eShopWeb.Web.Features.OrderDetails;
+using Microsoft.eShopWeb.Web.Services;
 using Microsoft.Extensions.Localization;
 using System.Threading.Tasks;
-using Microsoft.eShopWeb.Web.Services;
-using IronPdf;
 
 namespace Microsoft.eShopWeb.Web.Controllers
 {
@@ -23,7 +20,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
         public OrderController(IMediator mediator, IStringLocalizer<OrderController> stringLocalizer, IViewRenderService viewRenderService)
         {
             _mediator = mediator;
-            _viewRenderService= viewRenderService;
+            _viewRenderService = viewRenderService;
         }
 
         [HttpGet()]
@@ -54,7 +51,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             return View(viewModel);
         }
 
-         [HttpGet("{orderId}/pdf")]
+        [HttpGet("{orderId}/pdf")]
         public async Task<IActionResult> DetailPdf(int orderId)
         {
             var viewModel = await _mediator.Send(new GetOrderDetails(User.Identity.Name, orderId));
@@ -69,7 +66,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
 
             return File(pdfDoc.BinaryData, "application/pdf", $"order{orderId}.pdf");
 
-        // var viewResult = await Detail(orderId) as ViewResult;
+            // var viewResult = await Detail(orderId) as ViewResult;
             // var renderedView = await viewRenderService.RenderToStringAsync(viewResult.ViewName, viewResult.Model);
         }
     }

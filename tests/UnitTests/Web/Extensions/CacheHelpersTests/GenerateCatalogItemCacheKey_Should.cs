@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.eShopWeb.Web;
+﻿using Microsoft.eShopWeb.Web;
 using Microsoft.eShopWeb.Web.Extensions;
+using System;
 using Xunit;
 
 namespace Microsoft.eShopWeb.UnitTests.Web.Extensions.CacheHelpersTests
@@ -21,8 +21,10 @@ namespace Microsoft.eShopWeb.UnitTests.Web.Extensions.CacheHelpersTests
             Type exceptionType = null
         )
         {
-            if (string.IsNullOrEmpty(expectedResult)) {
-                if (exceptionType == null) {
+            if (string.IsNullOrEmpty(expectedResult))
+            {
+                if (exceptionType == null)
+                {
                     throw new Exception("Missing exception type to check");
                 }
                 Assert.Throws(
@@ -30,7 +32,7 @@ namespace Microsoft.eShopWeb.UnitTests.Web.Extensions.CacheHelpersTests
                     () => CacheHelpers.GenerateCatalogItemCacheKey(
                     pageIndex, itemPerPage, searchText, brandId, typeId));
             }
-            else 
+            else
             {
                 var result = CacheHelpers.GenerateCatalogItemCacheKey(
                     pageIndex, itemPerPage, searchText, brandId, typeId);

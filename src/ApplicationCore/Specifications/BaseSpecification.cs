@@ -1,8 +1,8 @@
-﻿using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+﻿using Microsoft.eShopWeb.ApplicationCore.Helpers.Query;
+using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
-using Microsoft.eShopWeb.ApplicationCore.Helpers.Query;
+using System.Linq.Expressions;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Specifications
 {

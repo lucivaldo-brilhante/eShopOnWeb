@@ -1,6 +1,6 @@
+using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 
 namespace Infrastructure.Services.CurrencyService
 {
@@ -12,4 +12,4 @@ namespace Infrastructure.Services.CurrencyService
             return Task.FromResult(value);
         }
     }
-} 
+}

@@ -41,7 +41,7 @@ namespace Microsoft.eShopWeb.Web.Features.MyOrders
                 Total = o.Total()
             });
         }
-        
+
         private string GetDetailedStatus(string status)
         {
             if (status == "Pending") return status;

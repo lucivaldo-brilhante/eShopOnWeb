@@ -1,30 +1,31 @@
-using System.Net.Mime;
+using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 
 namespace Infrastructure.Services.CurrencyService
 {
-    public class ConversionRule {
-        public Currency Source {get; set;}
-        public Currency Target {get; set;}
-        public decimal Value {get; set;}
+    public class ConversionRule
+    {
+        public Currency Source { get; set; }
+        public Currency Target { get; set; }
+        public decimal Value { get; set; }
     }
 
     public class CurrencyServiceStatic : ICurrencyService
     {
-        private static List<ConversionRule> DEFAULT_RULES = new  List<ConversionRule> {
+        private static List<ConversionRule> DEFAULT_RULES = new List<ConversionRule> {
             new ConversionRule { Source = Currency.EUR, Target = Currency.USD, Value = 0.9M },
-            
+
             new ConversionRule { Source = Currency.USD, Target = Currency.EUR, Value = 1.1M },
         };
 
         private readonly ICollection<ConversionRule> _rules;
 
-        public CurrencyServiceStatic(ICollection<ConversionRule> rules = null) {
+        public CurrencyServiceStatic(ICollection<ConversionRule> rules = null)
+        {
             _rules = rules ?? DEFAULT_RULES;
         }
 
@@ -41,12 +42,14 @@ namespace Infrastructure.Services.CurrencyService
         }
 
 
-        private decimal GetConversionValue(Currency source, Currency target) {
+        private decimal GetConversionValue(Currency source, Currency target)
+        {
             var conversionRule = DEFAULT_RULES.Where(rule => rule.Source == source && rule.Target == target).FirstOrDefault();
-            if (conversionRule == null) {
+            if (conversionRule == null)
+            {
                 throw new Exception("Conversion rule not found");
             }
             return conversionRule.Value;
         }
     }
-} 
+}

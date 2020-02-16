@@ -1,9 +1,7 @@
-using Microsoft.eShopWeb;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
 using Microsoft.eShopWeb.ApplicationCore.Services;
 using Microsoft.eShopWeb.Infrastructure.Data;
 using Microsoft.eShopWeb.Web.Interfaces;
-using Microsoft.eShopWeb.Web.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +14,8 @@ namespace Microsoft.eShopWeb.Web.Services
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void AddCatalogServices(this IServiceCollection services, IConfiguration configuration) {
+        public static void AddCatalogServices(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddScoped<ICatalogViewModelService, CachedCatalogViewModelService>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IBasketViewModelService, BasketViewModelService>();
@@ -32,4 +31,4 @@ namespace Microsoft.eShopWeb.Web.Services
         }
 
     }
-} 
+}

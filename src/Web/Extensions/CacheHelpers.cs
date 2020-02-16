@@ -2,7 +2,8 @@
 
 namespace Microsoft.eShopWeb.Web.Extensions
 {
-    public class InvalidPageIndexException: Exception {
+    public class InvalidPageIndexException : Exception
+    {
 
     }
 
@@ -14,7 +15,8 @@ namespace Microsoft.eShopWeb.Web.Extensions
             int pageIndex, int itemsPage,
             string searchText, int? brandId, int? typeId)
         {
-            if (pageIndex < 0) {
+            if (pageIndex < 0)
+            {
                 throw new InvalidPageIndexException();
             }
             return string.Format(
@@ -23,7 +25,8 @@ namespace Microsoft.eShopWeb.Web.Extensions
             );
         }
 
-        public static string GenerateCatalogItemIdKey(int id) {
+        public static string GenerateCatalogItemIdKey(int id)
+        {
             return $"catalog_item_{id}";
         }
 

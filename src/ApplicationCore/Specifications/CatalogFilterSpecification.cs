@@ -1,6 +1,6 @@
 ﻿using Microsoft.eShopWeb.ApplicationCore.Entities;
-using System.Linq.Expressions;
 using System;
+using System.Linq.Expressions;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Specifications
 {
@@ -15,7 +15,8 @@ namespace Microsoft.eShopWeb.ApplicationCore.Specifications
         /// <param name="typeId"></param>
         /// <returns></returns>
         public static Expression<Func<CatalogItem, bool>> BuildCatalogFilterExpression(
-            string searchText, int? brandId, int? typeId) {
+            string searchText, int? brandId, int? typeId)
+        {
             return catalogItem =>
                 (!brandId.HasValue || catalogItem.CatalogBrandId == brandId) &&
                 (!typeId.HasValue || catalogItem.CatalogTypeId == typeId) &&

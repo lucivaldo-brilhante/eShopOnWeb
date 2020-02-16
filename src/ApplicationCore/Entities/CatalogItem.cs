@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+﻿using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using System.ComponentModel;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities
 {
@@ -22,4 +22,4 @@ namespace Microsoft.eShopWeb.ApplicationCore.Entities
         #endregion
 
     }
-} 
+}

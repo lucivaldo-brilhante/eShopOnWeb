@@ -2,9 +2,9 @@ using System;
 
 namespace ApplicationCore.Exceptions
 {
-    public class WishlistNotFoundException: Exception
+    public class WishlistNotFoundException : Exception
     {
-       public WishlistNotFoundException(int wishlistId) : base($"No wishlist found with id {wishlistId}")
+        public WishlistNotFoundException(int wishlistId) : base($"No wishlist found with id {wishlistId}")
         {
         }
 

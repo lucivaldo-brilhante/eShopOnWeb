@@ -48,4 +48,4 @@ namespace Microsoft.eShopWeb.Web.Pages.Shared.Components.WishlistComponent
             return null;
         }
     }
-} 
+}

@@ -1,17 +1,17 @@
-using Microsoft.eShopWeb.ApplicationCore.Interfaces;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Microsoft.eShopWeb.ApplicationCore.Specifications;
-using System.Linq;
+using ApplicationCore.Exceptions;
 using Ardalis.GuardClauses;
 using Microsoft.eShopWeb.ApplicationCore.Entities.WishlistAggregate;
-using ApplicationCore.Exceptions;
+using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using Microsoft.eShopWeb.ApplicationCore.Specifications;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Services
 {
     public class WishlistService : IWishlistService
     {
-    private readonly IAsyncRepository<Wishlist> _wishlistRepository;
+        private readonly IAsyncRepository<Wishlist> _wishlistRepository;
         private readonly IAppLogger<WishlistService> _logger;
 
         public WishlistService(IAsyncRepository<Wishlist> wishlistRepository,
@@ -47,7 +47,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
                 return 0;
             }
             int count = wishlist.Items.Sum(i => i.Quantity);
-                _logger.LogInformation($"Wish list for {userName} has {count} items.");
+            _logger.LogInformation($"Wish list for {userName} has {count} items.");
             return count;
         }
 
@@ -60,7 +60,7 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             {
                 if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
                 {
-                    if(_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {quantity}.");
+                    if (_logger != null) _logger.LogInformation($"Updating quantity of item ID:{item.Id} to {quantity}.");
                     item.Quantity = quantity;
                 }
             }
@@ -78,5 +78,5 @@ namespace Microsoft.eShopWeb.ApplicationCore.Services
             wishlist.BuyerId = userName;
             await _wishlistRepository.UpdateAsync(wishlist);
         }
-   }
-} 
+    }
+}

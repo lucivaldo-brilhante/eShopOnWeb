@@ -2,18 +2,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.eShopWeb.ApplicationCore.Entities;
+using Microsoft.eShopWeb.ApplicationCore.Entities.WishlistAggregate;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using Microsoft.eShopWeb.ApplicationCore.Services;
 using Microsoft.eShopWeb.Infrastructure.Identity;
-using Microsoft.eShopWeb.Web;
 using Microsoft.eShopWeb.Web.Interfaces;
+using Microsoft.eShopWeb.Web.Pages.Basket;
 using Microsoft.eShopWeb.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.eShopWeb.Web.Pages.Basket;
-using Microsoft.eShopWeb.ApplicationCore.Entities.WishlistAggregate;
-using Microsoft.eShopWeb.ApplicationCore.Entities;
-using Microsoft.eShopWeb.ApplicationCore.Services;
 
 namespace Microsoft.eShopWeb.Web.Pages.Wishlist
 {
@@ -87,22 +86,24 @@ namespace Microsoft.eShopWeb.Web.Pages.Wishlist
         {
             await SetBasketModelAsync();
 
-            foreach (var kvp in items) {
+            foreach (var kvp in items)
+            {
                 var wishListItemId = int.Parse(kvp.Key);
                 var wishlistItem = await _wishListItemsRepo.GetByIdAsync(wishListItemId);
-                if (wishlistItem == null) {
-                     _logger.LogInformation($"No item found in the catalog.");
-                
+                if (wishlistItem == null)
+                {
+                    _logger.LogInformation($"No item found in the catalog.");
+
                 }
                 // wishlistItem.CatalogItemId
                 CatalogItem catalogItem = await _catalogItemsRepo.GetByIdAsync(wishlistItem.CatalogItemId);
                 await _basketService.AddItemToBasket(BasketModel.Id, wishlistItem.CatalogItemId, catalogItem.Price, kvp.Value);
             }
-                       
+
             return RedirectToPage("/Basket/Index");
         }
 
-       private async Task SetBasketModelAsync()
+        private async Task SetBasketModelAsync()
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {

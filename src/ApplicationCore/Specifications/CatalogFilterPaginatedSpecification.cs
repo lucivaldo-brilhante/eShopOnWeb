@@ -1,6 +1,4 @@
-﻿using Microsoft.eShopWeb.ApplicationCore.Entities;
-
-namespace Microsoft.eShopWeb.ApplicationCore.Specifications
+﻿namespace Microsoft.eShopWeb.ApplicationCore.Specifications
 {
     public class CatalogFilterPaginatedSpecification : CatalogFilterSpecification
     {

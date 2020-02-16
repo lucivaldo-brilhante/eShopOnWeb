@@ -15,7 +15,7 @@ namespace Microsoft.eShopWeb.Infrastructure.Data.Config
             builder.OwnsOne(o => o.ShipToAddress, a =>
             {
                 a.WithOwner();
-                
+
                 a.Property(a => a.ZipCode)
                     .HasMaxLength(18)
                     .IsRequired();
