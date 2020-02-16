@@ -6,12 +6,18 @@ using Microsoft.eShopWeb.Web.Services;
 using Microsoft.eShopWeb.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.eShopWeb.Web.Extensions;
+using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace Microsoft.eShopWeb.Web.Pages {
     public class IndexModel : PageModel {
         private readonly ICatalogViewModelService _catalogViewModelService;
 
-        public IndexModel(ICatalogViewModelService catalogViewModelService) {
+        public IndexModel(
+            ICatalogViewModelService catalogViewModelService,
+            IStringLocalizer<IndexModel> stringLocalizer,
+            IHtmlLocalizer<IndexModel> htmlLocalizer
+        ) {
             _catalogViewModelService = catalogViewModelService;
         }
 

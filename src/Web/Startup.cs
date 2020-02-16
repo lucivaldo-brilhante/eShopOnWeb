@@ -35,9 +35,18 @@ using Newtonsoft.Json;
 
 using Web.Extensions;
 using Web.Extensions.Middleware;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
 [assembly : ApiConventionType(typeof(DefaultApiConventions))]
+[assembly: ResourceLocation("Resourcea")]
+[assembly: RootNamespace("Microsoft.eShopWeb.Web")]
+
 namespace Microsoft.eShopWeb.Web {
+
     public class Startup {
         private IServiceCollection _services;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -160,11 +169,19 @@ namespace Microsoft.eShopWeb.Web {
                 options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
             });
 
+
+            services.AddLocalization(options => {
+                options.ResourcesPath = "Resources";
+            });
             services.AddMvc(options => {
                 options.Conventions.Add(new RouteTokenTransformerConvention(
                     new SlugifyParameterTransformer()));
+            })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => {
+                    options.ResourcesPath = "Resources";
+                })
+                .AddDataAnnotationsLocalization();
 
-            });
             services.AddRazorPages(options => {
                 options.Conventions.AuthorizePage("/Basket/Checkout");
             });
@@ -213,6 +230,26 @@ namespace Microsoft.eShopWeb.Web {
                 app.UseHsts();
             }
 
+
+            var supportedCultures = new[]
+            {
+                "en-US",
+                "pt-PT",
+            };
+
+            app.UseRequestLocalization(options => {
+
+                options.SetDefaultCulture("en-US");
+                // Formatting numbers, dates, etc.
+                options.AddSupportedCultures(supportedCultures);
+                // UI strings that we have localized.
+                options.AddSupportedUICultures(supportedCultures);
+                options.RequestCultureProviders = new IRequestCultureProvider[] {
+                    new QueryStringRequestCultureProvider(),
+                    new CookieRequestCultureProvider(),
+                    new CookieRequestCultureProvider(),
+                };
+            });
             app.UseStaticFiles();
 
             app.UseRouting();

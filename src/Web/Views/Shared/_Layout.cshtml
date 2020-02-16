@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Localization
+
+@inject IViewLocalizer ViewLocalizer
+@{
+    var uiCulture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -32,6 +38,7 @@
                         <a asp-area="" asp-page="/Index">
                             <img src="~/images/brand.png" alt="eShop On Web" />
                         </a>
+                        <h3>@ViewLocalizer["tagline"]</h3>
                     </section>
                     <partial name="_LoginPartial" />
                 </article>

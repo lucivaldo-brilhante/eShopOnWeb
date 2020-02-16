@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.Web.Features.MyOrders;
 using Microsoft.eShopWeb.Web.Features.OrderDetails;
+using Microsoft.Extensions.Localization;
 using System.Threading.Tasks;
 using Microsoft.eShopWeb.Web.Services;
 using IronPdf;
@@ -19,7 +20,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
         private readonly IMediator _mediator;
         private readonly IViewRenderService _viewRenderService;
 
-        public OrderController(IMediator mediator, IViewRenderService viewRenderService)
+        public OrderController(IMediator mediator, IStringLocalizer<OrderController> stringLocalizer, IViewRenderService viewRenderService)
         {
             _mediator = mediator;
             _viewRenderService= viewRenderService;
