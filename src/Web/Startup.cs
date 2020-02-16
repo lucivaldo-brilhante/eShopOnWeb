@@ -42,7 +42,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 
 [assembly : ApiConventionType(typeof(DefaultApiConventions))]
-[assembly: ResourceLocation("Resourcea")]
+[assembly: ResourceLocation("Resources")]
 [assembly: RootNamespace("Microsoft.eShopWeb.Web")]
 
 namespace Microsoft.eShopWeb.Web {
