@@ -25,6 +25,7 @@ using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mime;
 using Web.Extensions.Middleware;
@@ -176,6 +177,10 @@ namespace Microsoft.eShopWeb.Web
                 // IOutboundParameterTransformer implementation
                 options.ConstraintMap["slugify"] = typeof(SlugifyParameterTransformer);
             });
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+               .AddNewtonsoftJson();
+
+            #region snippet1
 
             services.AddLocalization(options =>
             {
@@ -186,11 +191,33 @@ namespace Microsoft.eShopWeb.Web
                 options.Conventions.Add(new RouteTokenTransformerConvention(
                     new SlugifyParameterTransformer()));
             })
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options =>
-                {
-                    options.ResourcesPath = "Resources";
-                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
+
+            #endregion snippet1
+
+            //.SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("pt-PT"),
+                };
+
+                //app.UseRequestLocalization(options =>
+                //{
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                // Formatting numbers, dates, etc.
+                options.SupportedCultures = supportedCultures;
+                // UI strings that we have localized.
+                options.SupportedUICultures = supportedCultures;
+                //options.RequestCultureProviders = new IRequestCultureProvider[] {
+                // new QueryStringRequestCultureProvider(),
+                // new CookieRequestCultureProvider(),
+                // new CookieRequestCultureProvider(),
+                //};
+            });
 
             services.AddRazorPages(options =>
             {
@@ -217,6 +244,29 @@ namespace Microsoft.eShopWeb.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            #region snippet2
+
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("pt-PT"),
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                // Formatting numbers, dates, etc.
+                SupportedCultures = supportedCultures,
+                // UI strings that we have localized.
+                SupportedUICultures = supportedCultures
+            });
+
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
+
+            #endregion snippet2
+
             app.UseBenchmarking();
             app.UseHealthChecks("/health",
                 new HealthCheckOptions
@@ -234,7 +284,9 @@ namespace Microsoft.eShopWeb.Web
                                 })
                             });
                         context.Response.ContentType = MediaTypeNames.Application.Json;
-                        await context.Response.WriteAsync(result);
+                        await context
+                            .Response
+                            .WriteAsync(result);
                     }
                 });
             if (env.IsDevelopment())
@@ -250,27 +302,9 @@ namespace Microsoft.eShopWeb.Web
                 app.UseHsts();
             }
 
-            var supportedCultures = new[]
-            {
-                "en-US",
-                "pt-PT",
-            };
-
-            app.UseRequestLocalization(options =>
-            {
-                options.SetDefaultCulture("en-US");
-                // Formatting numbers, dates, etc.
-                options.AddSupportedCultures(supportedCultures);
-                // UI strings that we have localized.
-                options.AddSupportedUICultures(supportedCultures);
-                options.RequestCultureProviders = new IRequestCultureProvider[] {
-                    new QueryStringRequestCultureProvider(),
-                    new CookieRequestCultureProvider(),
-                    new CookieRequestCultureProvider(),
-                };
-            });
             app.UseStaticFiles();
-
+            app.UseRequestLocalization();
+            app.UseMvcWithDefaultRoute();
             app.UseRouting();
 
             app.UseHttpsRedirection();
