@@ -18,6 +18,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
 
 
 
+        [HttpGet]
         public IActionResult Privacy()
         {
             ViewData["Message"] = _localizer["Politic Privacy blalalal."];
@@ -25,6 +26,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult SetCulture(string id = "en-US")
         {
             string culture = id;
@@ -51,6 +53,7 @@ namespace Microsoft.eShopWeb.Web.Controllers
             return LocalRedirect(returnUrl);
         }
 
+        [HttpGet]
         public IActionResult Error()
         {
             return View();
