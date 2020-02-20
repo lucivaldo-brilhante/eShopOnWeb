@@ -56,8 +56,9 @@
                     <section class="col-sm-6">
                         <div class="esh-app-footer-text hidden-xs">
                             e-ShopOnWeb. All rights reserved |
+                            @*<a asp-controller="Home" asp-action="Privacy"><span class="text-primary">@Localizer["Privacy Politic"]</span></a>*@ 
                             <a asp-controller="Home" asp-action="Privacy"><span class="text-primary">@Localizer["Privacy Politic"]</span></a>
-                            |
+                            
                             @await Html.PartialAsync("_SelectLanguagePartial")
                         </div>
                     </section>
