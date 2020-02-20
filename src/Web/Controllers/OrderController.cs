@@ -1,10 +1,13 @@
-﻿using MediatR;
+﻿using IronPdf;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.eShopWeb.Web.Features.MyOrders;
 using Microsoft.eShopWeb.Web.Features.OrderDetails;
 using Microsoft.eShopWeb.Web.Services;
 using Microsoft.Extensions.Localization;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Microsoft.eShopWeb.Web.Controllers
