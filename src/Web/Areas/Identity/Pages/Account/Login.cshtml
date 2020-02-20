@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "Log in";
 }
+ 
+<meta name="google-signin-client_id" content="45854297907-9el81da3jc6u7ichl86uocheidqpb8qc.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script> 
 
 
 <div class="container account-login-container">
@@ -34,6 +37,17 @@
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-default">Log in</button>
+
+                        <p></p><div class="g-signin2" data-onsuccess="onSignIn"></div> 
+                        <a href="#" onclick="signOut();">Sign out</a> 
+                        <script> 
+                        function signOut() { 
+                            var auth2 = gapi.auth2.getAuthInstance(); 
+                            auth2.signOut().then(function () { 
+                            console.log('User signed out.'); 
+                            }); 
+                        } 
+                        </script>
                     </div>
                     <div class="form-group">
                         <p>
