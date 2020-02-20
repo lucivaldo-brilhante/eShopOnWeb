@@ -260,3 +260,5 @@ pub/
 \.vscode/
 
 appsettings.*.json
+
+appsettings.Auth0.json

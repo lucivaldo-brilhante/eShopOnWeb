@@ -1,4 +1,5 @@
 ﻿using Ardalis.ListStartupServices;
+using Infrastructure.Services;
 using Infrastructure.Services.CurrencyService;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.eShopWeb.ApplicationCore.Interfaces;
+using Microsoft.eShopWeb.ApplicationCore.Services;
 using Microsoft.eShopWeb.Infrastructure.Data;
 using Microsoft.eShopWeb.Infrastructure.Identity;
 using Microsoft.eShopWeb.Infrastructure.Logging;
@@ -28,6 +30,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mime;
+using Web.Extensions;
 using Web.Extensions.Middleware;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
@@ -167,6 +170,8 @@ namespace Microsoft.eShopWeb.Web
             services.AddCatalogServices(Configuration);
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailSender, EmailSender>();
+            
+            services.Configure<AuthMessageSenderOptions>(Configuration);
 
             // Add memory cache services
             services.AddMemoryCache();
